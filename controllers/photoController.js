@@ -8,8 +8,8 @@ const { getErrorMessage } = require('../utils/errorutils');
 
 router.get('/catalog', async (req, res) => {
     
-    //const publication = await publicationService.getAll();
-    res.render('photo/catalog')//, { publication })
+    const photo = await publicationService.getAll();
+    res.render('photo/catalog', { photo })
 });
 
 router.get('/profile', async (req, res) => {
@@ -59,17 +59,17 @@ router.get('/create', isAuth, (req, res) => {
     res.render('photo/create');
 });
 
-// router.post('/create', isAuth, async (req, res) => {
-//     const publicationData = req.body;
+router.post('/create', isAuth, async (req, res) => {
+    const photoData = req.body;
     
-//     try {
-//         await publicationService.create(req.user._id, publicationData);
-//     } catch (error) {
-//         return res.status(400).render('art/create', {error: getErrorMessage(error)})
-//     }
+    try {
+        await publicationService.create(req.user._id, photoData);
+    } catch (error) {
+        return res.status(400).render('photo/create', {error: getErrorMessage(error)})
+    }
     
-//     res.redirect('/art/catalog');
-// });
+    res.redirect('/photo/catalog');
+});
 
 // router.get('/:publicationId/delete', isAuth, async (req, res) => {
 

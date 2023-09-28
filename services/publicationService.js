@@ -1,9 +1,16 @@
-const Publication = require('../models/Publication');
+const PostModel = require('../models/PostModel');
 const User = require('../models/User');
 
-exports.getAll = () => Publication.find({}).lean();
+exports.getAll = () => PostModel.find({}).lean();
 
-exports.getOne = (publicationId) => Publication.findById(publicationId).lean();
+exports.getOne = (publicationId) => PostModel.findById(publicationId).lean();
+
+exports.create = async (ownerId, photoData) =>{ 
+    photoData.author = ownerId
+    const photo = await PostModel.create({...photoData, owner: ownerId})
+
+}
+
 
 exports.getOneDetailed = (publicationId) => Publication.findById(publicationId).populate('author');;
 
@@ -13,11 +20,6 @@ exports.share = async (userId, publicationId) => {
     const publication = await Publication.findById(publicationId);
     publication.usersShared.push(userId);
     return publication.save()
-}
-exports.create = async (ownerId, publicationData) =>{ 
-    publicationData.author = ownerId
-    const publication = await Publication.create({...publicationData, owner: ownerId})
-
 }
 exports.addPublication = async (userId, publicationId) => {
     return User.updateOne({_id: userId }, { $push: { myPublications: publicationId}})

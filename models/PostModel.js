@@ -3,31 +3,45 @@ const mongoose = require('mongoose');
 const publicSchema = new mongoose.Schema({
     title: {
         type: String,
-        minLength: 6,
+        //minLength: 6,
         required: [true, 'Title is required'],
     },
-    paintingTechnique: {
+    keyword: {
         type: String,
-        mmaxLength: 15,
-        required: [true, 'PaintingTechnique is required'],
+        //mmaxLength: 15,
+        required: [true, 'Keyword is required'],
     },
-    artPicture: {
+    location: {
         type: String,
-        required: [true, 'ArtPicture is required'],
+        required: [true, 'Location is required'],
     },
-    certificate: {
+    date: {
         type: String,
-        enum: ['Yes', 'No'],
-        required: [true, 'Certificate is required'],
+        
+        required: [true, 'Date is required'],
+    },
+    image: {
+        type: String,
+        
+        required: [true, 'Image is required'],
+    },
+    description: {
+        type: String,
+        
+        required: [true, 'Description is required'],
     },
     author: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
     },
-    usersShared: [{
+    votesOnPost: [{
         type: mongoose.Types.ObjectId,
         ref: 'User',
     }],
+    ratingOfPost: {
+        type: Number,
+        default: 0,
+    },
     
 })
 

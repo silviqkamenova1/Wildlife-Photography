@@ -6,15 +6,14 @@ const { SECRET } = require('../constants');
 
 
 
-
 exports.findByEmail = (email) => User.findOne({ email });
 
-exports.register = async (username, password, repeatPassword, address) => {
+exports.register = async (firstName, lastName, email, password, repeatPassword) => {
     if (password !== repeatPassword) {
         throw new Error('Password missmatch');
     }
 
-    const existingUser = await User.findOne({username});
+    const existingUser = await User.findOne({email});
 
     if (existingUser) {
         throw new Error('User exists');
@@ -22,12 +21,12 @@ exports.register = async (username, password, repeatPassword, address) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await User.create({ username, password: hashedPassword, address });
-    return this.login(username, password)
+    await User.create({firstName, lastName, email, password: hashedPassword});
+    return this.login(email, password)
 };
 
 exports.login = async (email, password) => {
-    const user = await this.findBy(email);
+    const user = await this.findByEmail(email);
 
     if (!user) {
         throw new Error('Invalid email or password');
