@@ -7,27 +7,34 @@
                     <div class="card_left">
                         <div class="card_datails">
 
-                            <h1>Title: Two golden snub-nosed monkeys</h1>
-                            <h3>Created by an author: Alex Petkov</h3>
+                            <h1>Title: {{title}}</h1>
+                            <h3>Created by an author: {{author}}</h3>
                             <div class="card_animal">
-                                <p class="card-keyword">Keyword: Animal</p>
-                                <p class="card-location">Location: North America</p>
-                                <p class="card-date">Date: 18.02.2021</p>
+                                <p class="card-keyword">Keyword: {{keyword}}</p>
+                                <p class="card-location">Location: {{location}}</p>
+                                <p class="card-date">Date: {{date}}</p>
                             </div>
 
-                            <p class="disc">Description: Monkey, in general, any of nearly 200 species of tailed primate, with the exception of lemurs, tarsiers, and lorises.All but the durukuli of tropical Central and South America are active during the day, moving
-                                frequently in bands as they search for vegetation.</p>
+                            <p class="disc">{{description}}</p>
 
                             <!-- If there is no registered user, do not display buttons-->
                             <div class="social-btn">
                                 <!-- Only for registered user and author of the post -->
-                                <a href="#" class="edit-btn">Edit</a>
-                                <a href="#" class="del-btn">Delete</a>
-                                <!-- logged in users, who have not yet voted-->
-                                <a href="#" class="vote-up">UpVote +1</a>
-                                <a href="#" class="vote-down">DownVote -1</a>
+                                {{#if isAuthenticated}}
+                                        <a href="/photo/{{_id}}/edit" class="edit-btn">Edit</a>
+                                        <a href="/photo/{{_id}}/edit" class="del-btn">Delete</a>
+                                   <!--  {{#if isOwner}}
+                                logged in users, who have not yet voted
+                                    {{else}}
+                                        {{#if isVote}}
+                                        {{else}}
+                                            <p class="thanks-for-vote">Thanks For Voting</p>
+                                        {{/if}}
+                                    {{/if}}-->
+                                        <a href="#" class="vote-up">UpVote +1</a>
+                                        <a href="#" class="vote-down">DownVote -1</a>
+                                {{/if}}
                                 <!-- logged in user who has already voted-->
-                                <p class="thanks-for-vote">Thanks For Voting</p>
 
                             </div>
                         </div>

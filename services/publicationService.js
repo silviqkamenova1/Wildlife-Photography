@@ -10,9 +10,9 @@ exports.create = async (ownerId, photoData) =>{
     const photo = await PostModel.create({...photoData, owner: ownerId})
 
 }
+exports.getOneDetailed = (photoId) => PostModel.findById(photoId).populate('firstName');;
 
 
-exports.getOneDetailed = (publicationId) => Publication.findById(publicationId).populate('author');;
 
 exports.getUserId = (userId) => User.findById(userId).lean()
 

@@ -20,14 +20,15 @@ router.get('/profile', async (req, res) => {
 
 });
 
-// router.get('/:publicationId/details', async (req, res) => {
-//     const publication = await publicationService.getOneDetailed(req.params.publicationId).lean();
-//     ObjectId = publication.author._id;
+router.get('/:photoId/details', async (req, res) => {
+    const photo = await publicationService.getOneDetailed(req.params.photoId).lean();
+    ObjectId = photo.author._id;
+    console.log(photo);
 
-//     const isOwner = ObjectId.toString() == req.user?._id;
-//     const isShared = publication.usersShared?.some(id => id == req.user?._id)
-//     res.render('art/details', { ...publication, isOwner, isShared})//, 
-// });
+    const isOwner = ObjectId.toString() == req.user?._id;
+    const isVote = photo.votesOnPost?.some(id => id == req.user?._id)
+    res.render('photo/details', { ...photo, isOwner, isVote})//, 
+});
 
 // router.get('/:publicationId/shared', isAuth, async (req, res) => {
 //     try{
