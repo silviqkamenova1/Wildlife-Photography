@@ -10,8 +10,11 @@ exports.create = async (ownerId, photoData) =>{
     const photo = await PostModel.create({...photoData, owner: ownerId})
 
 }
-exports.getOneDetailed = (photoId) => PostModel.findById(photoId).populate('firstName');;
+exports.getOneDetailed = (photoId) => PostModel.findById(photoId)//.populate('firstName').populate('lastName');;
 
+exports.edit = (photoId, photoData) => PostModel.findByIdAndUpdate(photoId, photoData, { runValidators: true})
+
+exports.delete =  (photoId) =>  PostModel.findByIdAndDelete(photoId)
 
 
 exports.getUserId = (userId) => User.findById(userId).lean()
@@ -33,6 +36,3 @@ exports.addPublication = async (userId, publicationId) => {
 }
 
 
-exports.edit = (publicationId, publicationData) => Publication.findByIdAndUpdate(publicationId, publicationData, { runValidators: true})
-
-exports.delete =  (publicationId) =>  Publication.findByIdAndDelete(publicationId)

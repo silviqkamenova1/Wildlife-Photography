@@ -40,19 +40,19 @@ router.get('/:photoId/details', async (req, res) => {
 //     res.redirect('/')
 // });
 
-// router.get('/:publicationId/edit',isAuth, async (req, res) => {
-//     const publication = await publicationService.getOne(req.params.publicationId);
+router.get('/:photoId/edit',isAuth, async (req, res) => {
+    const photo = await publicationService.getOne(req.params.photoId);
 
 
-//     res.render('art/edit', { ...publication })
-// });
+    res.render('photo/edit', { ...photo })
+});
 
-// router.post('/:publicationId/edit', isAuth, async (req, res) => {
-//     const publication = req.body;
-//     await publicationService.edit(req.params.publicationId, req.body);
+router.post('/:photoId/edit', isAuth, async (req, res) => {
+    const photo = req.body;
+    await publicationService.edit(req.params.photoId, req.body);
 
-//     res.redirect(`/art/${req.params.publicationId}/details`)
-// });
+    res.redirect(`/photo/${req.params.photoId}/details`)
+});
 
 
 
@@ -72,12 +72,12 @@ router.post('/create', isAuth, async (req, res) => {
     res.redirect('/photo/catalog');
 });
 
-// router.get('/:publicationId/delete', isAuth, async (req, res) => {
+router.get('/:photoId/delete', isAuth, async (req, res) => {
 
-//     await publicationService.delete(req.params.publicationId);
-//     res.redirect('/art/catalog')
+    await publicationService.delete(req.params.photoId);
+    res.redirect('/photo/catalog')
 
-// });
+});
 
 
 module.exports = router;

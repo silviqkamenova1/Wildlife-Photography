@@ -14,11 +14,7 @@
 
     <div id="box">
 
-        {{#if error}}
-        <div class="error-container">
-            <p>{{error}}</p>
-        </div>
-        {{/if}}
+
 
         <nav>
             <!-- Do not forget to change the path to the image -->
@@ -29,8 +25,8 @@
                 <li><a href="/photo/catalog">All Posts</a></li>
                 {{#if isAuthenticated}}
                 <li><a href="/photo/create">Create Post</a></li>
-                <li><a href="/photo/profile">Posts of {{email-of-user}}</a></li>
-                <li><a href="logout">Logout</a></li>
+                <li><a href="/photo/profile">Posts of {{user.email}}</a></li>
+                <li><a href="/logout">Logout</a></li>
                 {{else}}
                 <li><a href="/register">Register</a></li>
                 <li><a href="/login">Login</a></li>
@@ -39,7 +35,13 @@
 
         </nav>
 
-{{{body}}}
+        
+        {{#if error}}
+        <div class="error-container">
+            <p>{{error}}</p>
+        </div>
+        {{/if}}
+        {{{body}}}
 
 
         <footer>
