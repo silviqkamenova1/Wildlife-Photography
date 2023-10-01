@@ -27,7 +27,6 @@ exports.register = async (firstName, lastName, email, password, repeatPassword) 
 
 exports.login = async (email, password) => {
     const user = await this.findByEmail(email);
-
     if (!user) {
         throw new Error('Invalid email or password');
     };
@@ -44,7 +43,6 @@ exports.login = async (email, password) => {
         email: user.email
     }
     const token = await jwt.sign(payload, SECRET);
-
     return token;
 }
 

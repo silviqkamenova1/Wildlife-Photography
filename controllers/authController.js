@@ -11,13 +11,13 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
    const { email, password } = req.body;
 
-   // try {
+   try {
       const token = await authService.login(email, password);
       res.cookie('auth', token);
       res.redirect('/');
-   // } catch (error) {
-   //    return res.status(404).render('photo/login', { error: getErrorMessage(error) });
-   // }
+   } catch (error) {
+      return res.status(404).render('photo/login', { error: getErrorMessage(error) });
+   }
 });
 
 router.get('/register', (req, res) => {
