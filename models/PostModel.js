@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const URL_PATTERN = /^https?:\/\/(.+)/
+const URL_PATTERN = /^https?:\/\/(.+)/;
 
 const publicSchema = new mongoose.Schema({
     title: {
@@ -25,11 +25,11 @@ const publicSchema = new mongoose.Schema({
         required: [true, 'Date is required'],
     },
     image: {
-        type: String,       
+        type: String,
         required: [true, 'Image is required'],
         validate: {
-            validator(value){
-                return URL_PATTERN.test(value)
+            validator(value) {
+                return URL_PATTERN.test(value);
             }, message: 'Image must be valid URL'
         }
     },
@@ -46,14 +46,17 @@ const publicSchema = new mongoose.Schema({
     votesOnPost: [{
         type: mongoose.Types.ObjectId,
         ref: 'User',
-        default: []
+        default: [],
     }],
     ratingOfPost: {
         type: Number,
         default: 0,
-    },
-    
-})
+    }
+
+},
+    {
+        strict: false,
+    });
 
 
 const Publication = mongoose.model('Publication', publicSchema);

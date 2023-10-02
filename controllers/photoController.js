@@ -14,9 +14,10 @@ router.get('/catalog', async (req, res) => {
 
 router.get('/profile', async (req, res) => {
 
-        // const user = await publicationService.getUserId(req.user._id);
+        const data = await publicationService.getPostByAuthor(req.user._id);
+        console.log(data);
         // console.log(user);
-        res.render('photo/profile')//, {...user})
+        res.render('photo/profile', {...data})
 
 });
 
@@ -38,12 +39,15 @@ router.get('/vote/:photoId/:type', isAuth, async (req, res) => {
     //console.log(user);
      try{
         const data = await publicationService.vote(req.user._id, req.params.photoId,value);
-        data.votesOnPost = {
-            _id:req.user._id,
-            email:req.useremail,
-        }
-        //Object.values(data.votesOnPost).forEach(el => console.log(el))
+        let emails = Object.entries(data)[2][1].votesOnPost
+        data.emails = emails.map(el => el.email)
         console.log(data);
+;
+        // data.votesOnPost = {
+        //     _id:req.user._id,
+        //     email:req.useremail,
+        // }
+        //Object.values(data.votesOnPost).forEach(el => console.log(el))
         res.redirect(`/photo/${req.params.photoId}/details`)
     } catch(error){
         console.log(error);
@@ -54,7 +58,6 @@ router.get('/vote/:photoId/:type', isAuth, async (req, res) => {
 
 router.get('/:photoId/edit',isAuth, async (req, res) => {
     const photo = await publicationService.getOne(req.params.photoId);
-
 
     res.render('photo/edit', { ...photo })
 });
