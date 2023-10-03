@@ -3,8 +3,7 @@ const { SECRET } = require('../constants');
 
 exports.authentication = async (req, res, next) =>{
     const token = req.cookies['auth'];
-    // console.log(token);
-    // console.log(SECRET);
+
     if(token) {
         try{
          const decodedToken = jwt.verify(token, SECRET);

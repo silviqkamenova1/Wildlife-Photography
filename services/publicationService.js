@@ -20,17 +20,15 @@ exports.create = async (ownerId, photoData) => {
     const photo = await PostModel.create({ ...photoData });
     
 };
-exports.getOneDetailed = (photoId) => PostModel.findById(photoId).populate('author');
+exports.getOneDetailed = (photoId) => PostModel.findById(photoId).populate('author').populate('votesOnPost', 'email');
 
 exports.edit = (photoId, photoData) => PostModel.findByIdAndUpdate(photoId, photoData, { runValidators: true });
 
-exports.delete = (photoId) => PostModel.findByIdAndDelete(photoId);
 
-
-exports.getById = (userId) => User.findById(userId)//, {strictPopulate: false});
+exports.getById = (userId) => User.findById(userId)
 
 exports.vote = async (userId, photoId, value) => {
-    const photo = await PostModel.findById(photoId).populate('votesOnPost', 'email');
+    const photo = await PostModel.findById(photoId);
     const user = await this.getById(userId);
 
     if (photo.votesOnPost.includes(user)) {
@@ -41,5 +39,6 @@ exports.vote = async (userId, photoId, value) => {
     return photo.save();
 }
 
+exports.delete = (photoId) => PostModel.findByIdAndDelete(photoId);
 
 
